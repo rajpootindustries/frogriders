@@ -6,6 +6,7 @@ class Frog {
         this.y = null;
         this.domElement = $(domElement);
         this.handleClick = this.handleClick.bind(this);
+        $('.tile').on('click', '.frog', this.handleClick );
     }
     getColor(){
         return this.color;
@@ -18,6 +19,7 @@ class Frog {
         return {x: this.x, y: this.y};
     }
     handleClick(){
-        // ? 
+        console.log(this)
+        
     }
 }

@@ -1,31 +1,43 @@
 class Board {
     constructor() {
-        this.board = null;
+        this.board = [];
+        this.rows = 9;
+        this.columns = 9;
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = null;
 
-        $('.frog').click( this.handleCellClick );
+        
     }
 
     intializeBoard() {
         //clear old board
         $('.gameBoard').empty()
         //populates board by creating a 2d array representind the board on the DOM
-        
+        for(var col = 0; col < this.columns; col++) {
+            this.board.push(new Array(this.row))
+        }
+
         // var tileContainer = $('<div>').addClass('tileContainer')
-        
-        for(var row = 0; row < 9; row++) {
-            for(var col = 0; col < 9; col++) {
+        var colors = ['red', 'blue', 'yellow', 'brown'];
+        var colorIndex = Math.floor(Math.random() * 4);
+        for(var row = 0; row < this.rows; row++) {
+            for(var col = 0; col < this.columns; col++) {
                 var tile = $('<div>').addClass('tile');
                 var leaf = $('<div>').addClass('leaf');
                 var frog = $('<div>').addClass('frog');
                 var indexes = {'data-row': row, 'data-col': col};
+                
                 tile.append(leaf.attr(indexes));
                 tile.append(frog.attr(indexes));
+
+                this.board[row][col] = new Frog(colors[colorIndex], tile);
                 $('.gameBoard').append(tile);
             }
         }
+        // this.handleCellClick = this.handleCellClick.bind();
+        this.handleCellClick = this.handleCellClick.bind(this)
+        $('.tile').on('click', '.leaf', this.handleCellClick );
 
     }
 
@@ -50,7 +62,7 @@ class Board {
             //gets clickedElement and generates click handler for valid tiles
                 //calls findValidMoves and gets array of valid objects
 
-            
+            console.log(this);
     }
 
     findValidMoves(frog) {
