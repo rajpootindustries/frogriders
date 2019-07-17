@@ -17,13 +17,12 @@ class Board {
         
         for(var row = 0; row < 9; row++) {
             for(var col = 0; col < 9; col++) {
-
                 var tile = $('<div>').addClass('tile');
                 var leaf = $('<div>').addClass('leaf');
                 var frog = $('<div>').addClass('frog');
-                tile.append(leaf.attr({'data-row': row, 'data-col': col}));
-                
-                tile.append(frog.attr({'data-row': row, 'data-col': col}));
+                var indexes = {'data-row': row, 'data-col': col};
+                tile.append(leaf.attr(indexes));
+                tile.append(frog.attr(indexes));
                 $('.gameBoard').append(tile);
             }
         }
@@ -31,7 +30,8 @@ class Board {
     }
 
     
-    addPlayer() {
+    addPlayer(player) {
+        this.playerArray.push(new Player(player));
         //adds player to the beginning of game
         //change the names of the players
         //returns nothing

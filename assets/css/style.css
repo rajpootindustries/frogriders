@@ -57,3 +57,19 @@ header{
   background-size: 100%;
   background-image: url(../images/red.png);
 }
+
+.red {
+    background-image: url(../images/red.png);
+}
+
+.blue {
+    background-image: url(../images/blue.png);
+}
+
+.yellow {
+    background-image: url(../images/yellow.png);
+}
+
+.brown {
+    background-image: url(../images/brown.png);
+}
