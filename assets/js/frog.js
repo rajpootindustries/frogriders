@@ -20,6 +20,6 @@ class Frog {
     }
     handleClick(){
         console.log(this)
-        
+
     }
 }

@@ -7,7 +7,7 @@ class Board {
         this.playerArray = [];
         this.currentPlayer = null;
 
-        
+
     }
 
     intializeBoard() {
@@ -20,14 +20,14 @@ class Board {
 
         // var tileContainer = $('<div>').addClass('tileContainer')
         var colors = ['red', 'blue', 'yellow', 'brown'];
-        var colorIndex = Math.floor(Math.random() * 4);
         for(var row = 0; row < this.rows; row++) {
             for(var col = 0; col < this.columns; col++) {
                 var tile = $('<div>').addClass('tile');
                 var leaf = $('<div>').addClass('leaf');
-                var frog = $('<div>').addClass('frog');
+                var colorIndex = Math.floor(Math.random() * 4);
+                var frog = $('<div>').addClass('frog').addClass(colors[colorIndex]);
                 var indexes = {'data-row': row, 'data-col': col};
-                
+
                 tile.append(leaf.attr(indexes));
                 tile.append(frog.attr(indexes));
 
@@ -41,7 +41,7 @@ class Board {
 
     }
 
-    
+
     addPlayer(player) {
         this.playerArray.push(new Player(player));
         //adds player to the beginning of game
@@ -57,7 +57,7 @@ class Board {
     }
 
     handleCellClick() {
-        //create click handlers valid tiles 
+        //create click handlers valid tiles
             //removes all previous click handlers
             //gets clickedElement and generates click handler for valid tiles
                 //calls findValidMoves and gets array of valid objects
@@ -76,6 +76,6 @@ class Board {
             //down
             //left
             //right
-        //returns: 
+        //returns:
     }
 }

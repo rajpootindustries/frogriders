@@ -15,7 +15,7 @@ header{
   /* float: left; */
   margin: 0 auto;
   display: block;
-  background-color: blue;
+  background-color: rgb(93, 93, 255);
 }
 
 .stats{
@@ -37,6 +37,7 @@ header{
   position: relative;
   margin:1px;
 
+
 }
 
 .tile > *{
@@ -45,17 +46,18 @@ header{
   position: absolute;
 }
 .leaf{
-  background-color: aquamarine;
+  background-color: rgb(33, 180, 33);
+  border-radius: 15px;
 }
 .frog{
   height: 60%;
   width: 60%;
-  background-color: yellow;
+  /* background-color: aquamarine; */
   border-radius: 50%;
   left: 19px;
   top: 19px;
   background-size: 100%;
-  background-image: url(../images/red.png);
+  /* background-image: url(../images/red.png); */
 }
 
 .red {
