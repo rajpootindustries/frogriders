@@ -7,8 +7,6 @@ class Board {
         this.playerArray = [];
         this.currentPlayer = null;
         this.tile = null;
-
-        
     }
 
     intializeBoard() {
@@ -54,9 +52,7 @@ class Board {
         
     }
 
-    addClickHandlers() {
-        
-    }
+
     addPlayer(player) {
         this.playerArray.push(new Player(player));
         //adds player to the beginning of game
