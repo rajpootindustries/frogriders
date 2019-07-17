@@ -4,6 +4,7 @@ header{
   background-color: aqua;
   text-align: center;
   font-size: 200%;
+  margin: 10px auto;
 }
 
 .gameBoard {
@@ -11,17 +12,21 @@ header{
   width: 810px;
   position: relative;
   border: 1px solid green;
-  float: left;
+  /* float: left; */
   margin: 0 auto;
   display: block;
+  background-color: blue;
 }
 
 .stats{
-  width: 90vw;
+  width: 100%;
   height: 40px;
   background-color: chartreuse;
-  position: absolute;
-  bottom: 10px;
+  position: relative;
+  /* left:5%;
+  bottom: 1px; */
+  margin: 10px auto;
+  display: block;
 
 }
 
@@ -43,10 +48,12 @@ header{
   background-color: aquamarine;
 }
 .frog{
-  height: 50%;
-  width: 50%;
+  height: 60%;
+  width: 60%;
   background-color: yellow;
   border-radius: 50%;
-  left: 24px;
-  top: 24px;
+  left: 19px;
+  top: 19px;
+  background-size: 100%;
+  background-image: url(../images/red.png);
 }
