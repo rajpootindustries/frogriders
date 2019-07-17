@@ -15,3 +15,10 @@ function createFrogs() {
   }
 
 }
+
+/*
+set game board size 90% vmin
+element box size = 10% vmin
+frog class: yellow, red, blue, brown
+
+*/
