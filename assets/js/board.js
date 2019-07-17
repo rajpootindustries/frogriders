@@ -22,6 +22,14 @@ class Board {
         var colors = ['red', 'blue', 'yellow', 'brown'];
         for(var row = 0; row < this.rows; row++) {
             for(var col = 0; col < this.columns; col++) {
+                if(row === 4 && col === 4){
+                    var tile = $('<div>').addClass('tile');
+                    var leaf = $('<div>').addClass('leaf');
+                    leaf.css('background-color', 'orange');
+                    var indexes = { 'data-row': row, 'data-col': col };
+                    tile.append(leaf.attr(indexes));
+                    $('.gameBoard').append(tile);
+                } else{
                 var tile = $('<div>').addClass('tile');
                 var leaf = $('<div>').addClass('leaf');
                 var colorIndex = Math.floor(Math.random() * 4);
@@ -35,7 +43,8 @@ class Board {
                 $('.gameBoard').append(tile);
             }
         }
-        console.log(this.board)
+    }
+
         // this.handleCellClick = this.handleCellClick.bind();
         this.handleCellClick = this.handleCellClick.bind(this)
         $('.tile').on('click', '.leaf', this.handleCellClick );
