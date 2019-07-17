@@ -6,7 +6,7 @@ header{
   font-size: 200%;
 }
 
-.gameboard {
+.container {
   height: 81vh;
   width: 81vw;
   /*position: relative;*/
@@ -18,12 +18,11 @@ header{
 .tile{
 
 }
-
-.frog{
-
-}
 .leaf{
   height: 9vh;
   width: 9vw;
   border: 3px solid red;
+}
+.frog{
+
 }
