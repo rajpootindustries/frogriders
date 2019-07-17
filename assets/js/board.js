@@ -14,6 +14,7 @@ class Board {
     intializeBoard() {
         //clear old board
         $('.gameBoard').empty()
+
         //populates board by creating a 2d array representind the board on the DOM
         for(var col = 0; col < this.columns; col++) {
             this.board.push(new Array(this.row))
@@ -23,28 +24,38 @@ class Board {
         var colors = ['red', 'blue', 'yellow', 'brown'];
         for(var row = 0; row < this.rows; row++) {
             for(var col = 0; col < this.columns; col++) {
-                var indexes = {'data-row': row, 'data-col': col};
-                var tile = $('<div>').addClass('tile');
-                var leaf = $('<div>').addClass('leaf').attr(indexes);
-                var colorIndex = Math.floor(Math.random() * 4);
-                var frog = $('<div>').addClass('frog').addClass(colors[colorIndex]).attr(indexes);
+                var indexes = { 'data-row': row, 'data-col': col };
+                var tile = $('<div>').addClass('tile').attr(indexes);
+                var leaf = $('<div>').addClass('leaf');
+                if(row === 4 && col === 4){
+                    leaf.css('background-color', 'orange');
+                    tile.append(leaf);
+                } else{
+                    var colorIndex = Math.floor(Math.random() * 4);
+                    var frog = $('<div>').addClass('frog').addClass(colors[colorIndex]);
 
-                tile.append(leaf);
-                tile.append(frog);
-                
-                this.board[row][col] = new Frog(colors[colorIndex], tile);
-                
+                    tile.append(leaf);
+                    tile.append(frog);
+                    
+                    this.board[row][col] = new Frog(colors[colorIndex], tile);
+                    
+                }
                 $('.gameBoard').append(tile);
-            }
-        }
-        var board = this.board;
-        $('.tile').on('click', '.leaf', board, this.handleCellClick);
-        $('.tile').on('click', '.frog', board, this.handleCellClick);
-        console.log(this.board)
 
+            }
+
+        }
+        
+        this.handleCellClick = this.handleCellClick.bind(this);        
+        $('.tile').on('click', '.leaf', this.handleCellClick);
+        $('.tile').on('click', '.frog', this.handleCellClick);
+        
+        
     }
 
-
+    addClickHandlers() {
+        
+    }
     addPlayer(player) {
         this.playerArray.push(new Player(player));
         //adds player to the beginning of game
@@ -59,17 +70,18 @@ class Board {
 
     }
 
-    handleCellClick(board) {
-        console.log(this);
-        var col = $(this).attr('data-col');
-        var row = $(this).attr('data-row');
+    handleCellClick() {
+        var tile = event.currentTarget
+        var col = $(tile).attr('data-col');
+        var row = $(tile).attr('data-row');
         console.log(col, row)
+        console.log(this.board);
 
-        // var f = this.board[row][col];
-        this.board = board['data'];
-        if (this.board[row][col].color !== null) {
-            
-        }
+        var f = this.board[row][col];
+        console.log(f);
+        // if (this.board[row][col].color !== null) {
+
+        // }
         //gets clickedElement and generates click handler for valid tiles
             //calls findValidMoves and gets array of valid objects
         

@@ -7,5 +7,7 @@ function initializeApp() {
     gameBoard.addPlayer('Elon');
 
     gameBoard.intializeBoard();
+    // gameBoard.addClickHandlers = gameBoard.addClickHandlers.bind(this);
+    gameBoard.addClickHandlers();
 
 }

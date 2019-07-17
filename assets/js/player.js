@@ -13,7 +13,7 @@ class Player {
     calculateScore(){ // simplified rules
         return Object.values(this.frogBag).reduce((accumulator, currentValue) => accumulator + currentValue);
     }
-    setfrogBag(frogBag, color){
+    setfrogBag(color){
         if(color === 'red'){
             this.frogBag.red += 1;
         }
@@ -33,5 +33,5 @@ class Player {
     getfrogBag(){
         return this.frogBag;
     }
-    
+
 }
