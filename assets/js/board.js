@@ -68,11 +68,20 @@ class Board {
     }
 
     handleCellClick() {
+
         //create click handlers valid tiles
-            //removes all previous click handlers
-            //gets clickedElement and generates click handler for valid tiles
-                //calls findValidMoves and gets array of valid objects
-            console.log(this);
+        //removes all previous click handlers
+        //gets clickedElement and generates click handler for valid tiles
+        //calls findValidMoves and gets array of valid objects
+        var tile = event.currentTarget
+        var col = $(tile).attr('data-col');
+        var row = $(tile).attr('data-row');
+
+        var clickedFrog = this.board[row][col];
+        if (this.board[row][col].color !== null) {
+            //check valid moves
+            findValidMoves(clickedFrog);
+        }
     }
 
     findValidMoves(frog) {
@@ -83,10 +92,9 @@ class Board {
             var relativeLeft = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
             var relativeRight = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
         }
-        
-        //returns array of valid objects
-            //checks in all directions using checkInDirection to find valid moves;
     }
+
+
 
     checkInDirection() {
         //used by find valid moves for the current player
