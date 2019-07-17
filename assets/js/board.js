@@ -30,6 +30,7 @@ class Board {
                 if(row === 4 && col === 4){
                     leaf.css('background-color', 'orange');
                     tile.append(leaf);
+                    this.board[row][col] = null;
                 } else{
                     var colorIndex = Math.floor(Math.random() * 4);
                     var frog = $('<div>').addClass('frog').addClass(colors[colorIndex]);
@@ -74,22 +75,25 @@ class Board {
         var tile = event.currentTarget
         var col = $(tile).attr('data-col');
         var row = $(tile).attr('data-row');
-        console.log(col, row)
-        console.log(this.board);
+        // console.log(col, row)
+        // console.log(this.board);
 
-        var f = this.board[row][col];
-        console.log(f);
-        // if (this.board[row][col].color !== null) {
+        var clickedFrog = this.board[row][col];
+        console.log(this.board[4][4])
+        if (this.board[row][col].color !== null) {
+            //check valid moves
+            this.findValidMoves(clickedFrog);
 
-        // }
+        }
         //gets clickedElement and generates click handler for valid tiles
             //calls findValidMoves and gets array of valid objects
         
     }
 
-    findValidMoves(frog) {
+    findValidMoves(row, col) {
         //returns array of valid objects
             //checks in all directions using checkInDirection to find valid moves;
+
     }
 
     checkInDirection() {
