@@ -38,12 +38,13 @@ class Board {
 
                 tile.append(leaf.attr(indexes));
                 tile.append(frog.attr(indexes));
-
+                
                 this.board[row][col] = new Frog(colors[colorIndex], tile);
                 $('.gameBoard').append(tile);
             }
         }
     }
+
         // this.handleCellClick = this.handleCellClick.bind();
         this.handleCellClick = this.handleCellClick.bind(this)
         $('.tile').on('click', '.leaf', this.handleCellClick );
