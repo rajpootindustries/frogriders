@@ -6,8 +6,9 @@ class Board {
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = null;
+        this.tile = null;
 
-
+        
     }
 
     intializeBoard() {
@@ -22,23 +23,24 @@ class Board {
         var colors = ['red', 'blue', 'yellow', 'brown'];
         for(var row = 0; row < this.rows; row++) {
             for(var col = 0; col < this.columns; col++) {
-                var tile = $('<div>').addClass('tile');
-                var leaf = $('<div>').addClass('leaf');
-                var colorIndex = Math.floor(Math.random() * 4);
-                var frog = $('<div>').addClass('frog').addClass(colors[colorIndex]);
                 var indexes = {'data-row': row, 'data-col': col};
+                var tile = $('<div>').addClass('tile');
+                var leaf = $('<div>').addClass('leaf').attr(indexes);
+                var colorIndex = Math.floor(Math.random() * 4);
+                var frog = $('<div>').addClass('frog').addClass(colors[colorIndex]).attr(indexes);
 
-                tile.append(leaf.attr(indexes));
-                tile.append(frog.attr(indexes));
+                tile.append(leaf);
+                tile.append(frog);
                 
                 this.board[row][col] = new Frog(colors[colorIndex], tile);
+                
                 $('.gameBoard').append(tile);
             }
         }
+        var board = this.board;
+        $('.tile').on('click', '.leaf', board, this.handleCellClick);
+        $('.tile').on('click', '.frog', board, this.handleCellClick);
         console.log(this.board)
-        // this.handleCellClick = this.handleCellClick.bind();
-        this.handleCellClick = this.handleCellClick.bind(this)
-        $('.tile').on('click', '.leaf', this.handleCellClick );
 
     }
 
@@ -57,13 +59,20 @@ class Board {
 
     }
 
-    handleCellClick() {
-        //create click handlers valid tiles
-            //removes all previous click handlers
-            //gets clickedElement and generates click handler for valid tiles
-                //calls findValidMoves and gets array of valid objects
+    handleCellClick(board) {
+        console.log(this);
+        var col = $(this).attr('data-col');
+        var row = $(this).attr('data-row');
+        console.log(col, row)
 
-            console.log(this);
+        // var f = this.board[row][col];
+        this.board = board['data'];
+        if (this.board[row][col].color !== null) {
+            
+        }
+        //gets clickedElement and generates click handler for valid tiles
+            //calls findValidMoves and gets array of valid objects
+        
     }
 
     findValidMoves(frog) {
