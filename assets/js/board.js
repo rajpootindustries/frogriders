@@ -83,8 +83,7 @@ class Board {
             var relativeLeft = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
             var relativeRight = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
         }
-        console.log(relativeUp, relativeDown, relativeLeft, relativeRight);
-         
+        
         //returns array of valid objects
             //checks in all directions using checkInDirection to find valid moves;
     }

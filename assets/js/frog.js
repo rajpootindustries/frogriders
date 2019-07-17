@@ -11,7 +11,7 @@ class Frog {
     getColor(){
         return this.color;
     }
-    setPosition(x, y){
+    setPosition(){
         this.x = x;
         this.y = y;
         
@@ -22,5 +22,9 @@ class Frog {
     handleClick(){
         console.log(this)
 
+    }
+    setClickHandler(frog) {
+        this.handleClick = this.handleClick.bind(this);
+        $('.tile').on('click', frog, this.handleClick );
     }
 }
