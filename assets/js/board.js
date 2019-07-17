@@ -61,7 +61,7 @@ class Board {
             //removes all previous click handlers
             //gets clickedElement and generates click handler for valid tiles
                 //calls findValidMoves and gets array of valid objects
-
+            
             console.log(this);
     }
 
