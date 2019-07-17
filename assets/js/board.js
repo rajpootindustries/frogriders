@@ -6,7 +6,7 @@ class Board {
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = null;
-
+        this.frog = null;
 
     }
 
@@ -39,7 +39,8 @@ class Board {
                 tile.append(leaf.attr(indexes));
                 tile.append(frog.attr(indexes));
                 
-                this.board[row][col] = new Frog(colors[colorIndex], tile);
+                this.board[row][col] = new Frog(colors[colorIndex], tile).setPosition(col, row);
+                console.log(this.board[row][col] = new Frog(colors[colorIndex], tile).setPosition(col, row));
                 $('.gameBoard').append(tile);
             }
         }
@@ -71,21 +72,29 @@ class Board {
             //removes all previous click handlers
             //gets clickedElement and generates click handler for valid tiles
                 //calls findValidMoves and gets array of valid objects
-
             console.log(this);
     }
 
     findValidMoves(frog) {
+        let currentPosition = frog.getPosition(); // {x: this.x, y: this.y};
+        for(let dir of this.checkInDirection()){
+            var relativeUp = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
+            var relativeDown = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
+            var relativeLeft = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
+            var relativeRight = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
+        }
+        console.log(relativeUp, relativeDown, relativeLeft, relativeRight);
+         
         //returns array of valid objects
             //checks in all directions using checkInDirection to find valid moves;
     }
 
     checkInDirection() {
         //used by find valid moves for the current player
-            //up
-            //down
-            //left
-            //right
-        //returns:
+            const up = {x: 0, y: 1}
+            const down = {x: 0, y: -1}
+            const left = {x: -1, y: 0}
+            const right = {x: 1, y:0}
+        return [up, down, left, right];
     }
 }
