@@ -6,12 +6,7 @@ class Board {
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = null;
-<<<<<<< HEAD
-        this.tile = null;
-=======
-        this.frog = null;
 
->>>>>>> aaa563966ee9a1a47abff4a6a0849ea9f69c8618
     }
 
     intializeBoard() {
@@ -50,15 +45,13 @@ class Board {
         }
     }
 
-<<<<<<< HEAD
-=======
-        // this.handleCellClick = this.handleCellClick.bind();
         this.handleCellClick = this.handleCellClick.bind(this)
         $('.tile').on('click', '.leaf', this.handleCellClick );
+        $('.tile').on('click', '.frog', this.handleCellClick );
+
 
     }
 
->>>>>>> aaa563966ee9a1a47abff4a6a0849ea9f69c8618
 
     addPlayer(player) {
         this.playerArray.push(new Player(player));
