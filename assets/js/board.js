@@ -2,4 +2,8 @@ class Board {
     constructor() {
         
     }
+
+    intializeBoard() {
+        $()
+    }
 }
