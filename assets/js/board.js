@@ -8,12 +8,16 @@ class Board {
         this.currentPlayer = 0;
         this.possibleActions = [];
         this.firstSelectedFrog = null;
+       
+       
+        this.modal = new Modal('#modalShadow', "#modalBody", "#modalMessage", "#modalButton" );
 
     }
 
     intializeBoard() {
         //clear old board
         $('.gameBoard').empty()
+        this.modal.init();
 
         //populates board by creating a 2d array representind the board on the DOM
         for(var col = 0; col < this.columns; col++) {
@@ -81,6 +85,7 @@ class Board {
     }
 
     handleCellClick() {
+
         var tile = event.currentTarget
         var col = parseInt($(tile).attr('data-col'));
         var row = parseInt($(tile).attr('data-row'));
@@ -145,6 +150,8 @@ class Board {
         console.log(this.winCondition());
         if(this.winCondition()){
             //endgame, modal
+            this.modal.updateMessage('Player One Wins');
+            this.modal.show();
         }
     }
 

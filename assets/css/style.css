@@ -116,6 +116,7 @@ header{
 .center.choice {
     background-color: rgb(245, 196, 105);
 }
+
 /* modal elements */
 #modalShadow{
   position: fixed;
@@ -134,11 +135,17 @@ header{
   min-width: 30vmin;
   transform: translate(-50%, -50%);
   background-color: lightgreen;
-  display: flex;
+  border-radius:10%;
+  /* display: flex; */
 }
 #modalMessage{
-  margin: auto auto;
+  position: relative;
+  text-align: center;
+  top: 50px;
 }
 #modalButton{
-  position: fixed;
+  position: absolute;
+  margin: 5px auto;
+  bottom: 15px;
+  left: 7.5vmin;
 }

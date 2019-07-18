@@ -6,6 +6,7 @@ class Modal{
         this.modalButton = $(modalButton);
         
         this.onClose = null;
+        
         this.hide = this.hide.bind(this);
         this.show = this.show.bind(this);
     }
@@ -25,13 +26,17 @@ class Modal{
         this.modalMessage.text(modalTxt);
     }
     init(){
-        // this.hide();
+        this.hide();
         // this.modalShadow.off('click');
         // this.modalShadow.on('click', this.onClose);
         // this.modalShadow.on('click', this.hide);
         this.modalButton.off('click');
         this.modalButton.on('click', this.onClose);
         this.modalButton.on('click', this.hide);
+    }
+
+    onClose() {
+        
     }
     
 }
