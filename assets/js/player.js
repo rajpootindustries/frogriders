@@ -5,7 +5,7 @@ class Player {
         this.frogBag = {}; // stores number of frogs belonging to player {'red': 4, 'blue': 3}
     }
     setScore(score){
-        this.score = score;
+        this.score += score;
     }
     getScore(){
         return this.score;

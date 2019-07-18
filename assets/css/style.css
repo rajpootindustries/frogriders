@@ -1,6 +1,13 @@
+html{
+  background-image: url('../images/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Concert One', cursive;
+}
+
 header{
   height: 5%;
-  width: 100%;
+  width: 60%;
   background-color: aqua;
   text-align: center;
   font-size: 200%;
@@ -19,7 +26,7 @@ header{
 }
 
 .stats{
-  width: 100%;
+  width: 70%;
   height: 40px;
   background-color: chartreuse;
   position: relative;
@@ -27,7 +34,28 @@ header{
   bottom: 1px; */
   margin: 10px auto;
   display: block;
+  margin: 4px auto;
 
+}
+
+.player1{
+  height:34px;
+  width: 60px;
+  float:left;
+  background-color: coral;
+  margin: 4px;
+}
+.player2{
+  height: 34px;
+  width: 60px;
+  float: right;
+  background-color: coral;
+  margin: 4px;
+}
+
+#player1, #player2{
+  text-align: center;
+  margin:10px;
 }
 
 .tile{
@@ -75,3 +103,17 @@ header{
 .brown {
     background-image: url(../images/brown.png);
 }
+
+.center {
+    background-color: goldenrod;
+}
+
+.choice {
+    background-color: greenyellow;
+    
+}
+
+.center.choice {
+    background-color: rgb(245, 196, 105);
+}
+

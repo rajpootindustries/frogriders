@@ -8,5 +8,4 @@ function initializeApp() {
 
     gameBoard.intializeBoard();
 
-
 }
