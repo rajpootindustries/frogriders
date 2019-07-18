@@ -26,4 +26,8 @@ class Frog {
         this.handleClick = this.handleClick.bind(this);
         $('.tile').on('click', frog, this.handleClick );
     }
+
+    getFrog() {
+        return $('<div>').addClass("frog " + this.color);
+    }
 }

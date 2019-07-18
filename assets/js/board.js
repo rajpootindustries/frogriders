@@ -7,6 +7,8 @@ class Board {
         this.playerArray = [];
         this.currentPlayer = null;
         this.possibleActions = [];
+        this.firstSelectedFrog = null;
+
     }
 
     intializeBoard() {
@@ -51,7 +53,8 @@ class Board {
         $('.tile').on('click', '.leaf', this.handleCellClick);
         $('.tile').on('click', '.frog', this.handleCellClick);
         
-        
+        //initialize players
+        this.currentPlayer = 0;
     }
 
 
@@ -66,43 +69,95 @@ class Board {
     alternatePlayer() {
         //gets the next player and sets it as current player
         //returns nothing
+        if(this.currentPlayer < this.playerArray.length) {
+            this.currentPlayer++;
+        }
+        else {
+            this.currentPlayer = 0;
+        }
 
     }
 
     handleCellClick() {
         var tile = event.currentTarget
-        var col = $(tile).attr('data-col');
-        var row = $(tile).attr('data-row');
-
-        var clickedFrog = this.board[row][col];
-        if (this.board[row][col].color !== null) {
-            //check valid moves
-            this.findValidMoves(clickedFrog);
+        var col = parseInt($(tile).attr('data-col'));
+        var row = parseInt($(tile).attr('data-row'));
+        
+        if(this.possibleActions.length === 0) {
+            var clickedFrog = this.board[row][col];
+            this.firstSelectedFrog = clickedFrog;
+            if (this.board[row][col]) {
+                //check valid moves
+                this.findValidMoves(clickedFrog);
+            }
         }
+        else {
+            //click on one of the possible actions
+            //if tile is one of the possible actions remove frog in between
+            for (var i = 0; i < this.possibleActions.length; i++) {
+                var action_row = this.possibleActions[i]['target'][0];
+                var action_col = this.possibleActions[i]['target'][1];
+                console.log(action_row, row, action_col, col);
+                if(action_row === row && action_col === col) {
+                    console.log('clicked right one');
+                    
+                    console.log(this.possibleActions);
+                    var target_row = this.possibleActions[i]['middle'][0];
+                    var target_col = this.possibleActions[i]['middle'][1];
+                    console.log(this.possibleActions);
+                    //give frog to player, or the points of the frog
+                    this.popFrog(this.board[target_row][target_col]);
+                    this.possibleActions = [];
+
+
+                    //move frog
+                    var frogThatJumped = this.popFrog(this.firstSelectedFrog);
+                    console.log('ftj', frogThatJumped);
+                    this.setFrog(frogThatJumped, action_row, action_col)
+
+                    if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
+
+                    }
+                    else {
+                        //change player
+
+                    }
+                }
+                else {
+                    console.log("clicked the wrong one");
+                }
+            }
+        }
+        
     }
 
     findValidMoves(frog) {
-        let currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
+        this.possibleActions = [];
+        var currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
         
-        
-            
         var up = this.checkInDirection(currentPosition.row, currentPosition.col, "up"); // {row: 1, col:2}
         var down = this.checkInDirection(currentPosition.row, currentPosition.col, "down"); // {row:1, col:0}
         var left = this.checkInDirection(currentPosition.row, currentPosition.col, "left"); // {row:-1, col:0}
         var right = this.checkInDirection(currentPosition.row, currentPosition.col, "right");
 
-        var directions = [up, down, left, right];
+        var directions = [this.clone(up), this.clone(down), this.clone(left), this.clone(right)];
+        var nextDirection = [this.clone(up), this.clone(down), this.clone(left), this.clone(right)];
         var stringDir = ["up", "down", "left", "right"];
-        for(var i = 0; i < directions.length; i++) {
+        for(var i = 0; i < directions.length; i++) {    
             if(this.isInbound(directions[i].row, directions[i].col) && this.isFrog(this.board[directions[i].row][directions[i].col])) {  
-                directions[i] = this.checkInDirection(directions[i].row, directions[i].col, stringDir[i]);
-                if(this.isInbound(directions[i].row, directions[i].col) && this.board[directions[i].row][directions[i].col] === null) {
-                    this.possibleActions.push([directions[i].row, directions[i].col]);
+                nextDirection[i] = this.checkInDirection(directions[i].row, directions[i].col, stringDir[i]);
+                if(this.isInbound(nextDirection[i].row, nextDirection[i].col) && this.board[nextDirection[i].row][nextDirection[i].col] === null) {
+                    this.possibleActions.push({"target": [nextDirection[i].row, nextDirection[i].col], "middle": [directions[i].row, directions[i].col]});
                 }
             }
         }
         
-        console.log(this.possibleActions);
+        if(this.possibleActions.length === 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
 
         // if relative direction.x < 0 || relativeDirection.x > 9 || relativeDirection.y < 0 || relativeDirection.y > 9 { relativeDirection = false;} 
         // if relativeDirection is undefined (empty tile) => false
@@ -110,8 +165,8 @@ class Board {
     }
     checkInDirection(row, col, direction) {
         //used by find valid moves for the current player
-        const up = {row: 0, col: 1};
-        const down = {row: 0, col: -1};
+        const up = {row: 0, col: -1};
+        const down = {row: 0, col: 1};
         const left = {row: -1, col: 0};
         const right = {row: 1, col:0};
 
@@ -145,4 +200,27 @@ class Board {
         }
     }
     
+    popFrog(frog) {
+        var index = frog.getPosition();
+        
+        var frogRemoved = this.board[index.row][index.col];
+        this.board[index.row][index.col] = null;
+        var x = $('[data-row=' + index.row + '][data-col=' + index.col + '] div.frog')
+        x.remove();
+        return frogRemoved;
+    }
+
+    setFrog(frog, row, col) {
+        console.log('setfrog', frog, row, col)
+        var element = frog.getFrog();
+        var x = $('div.tile[data-row=' + row + '][data-col=' + col + ']');
+        frog.setPosition(row, col);
+        this.board[row][col] = frog;
+        console.log(x)
+        x.append(element);
+    }
+
+    clone(src) {
+        return Object.assign({}, src);
+    }
 }
