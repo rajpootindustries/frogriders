@@ -69,7 +69,7 @@ class Board {
     alternatePlayer() {
         //gets the next player and sets it as current player
         //returns nothing
-        if(this.currentPlayer < this.playerArray.length-1) {
+        if(this.currentPlayer < this.playerArray.length - 1) {
             this.currentPlayer++;
             console.log(this.currentPlayer);
         }
@@ -104,11 +104,9 @@ class Board {
                 // console.log(action_row, row, action_col, col);
                 if(action_row === row && action_col === col) {
                     console.log('clicked right one');
-
-                    // console.log(this.possibleActions);
+                    
                     var target_row = this.possibleActions[i]['middle'][0];
                     var target_col = this.possibleActions[i]['middle'][1];
-                    // console.log(this.possibleActions);
                     //give frog to player, or the points of the frog
                     var removedFrog = this.popFrog(this.board[target_row][target_col]);
                     this.possibleActions = [];
@@ -117,7 +115,6 @@ class Board {
 
                     //move frog
                     var frogThatJumped = this.popFrog(this.firstSelectedFrog);
-                    // console.log('ftj', frogThatJumped);
                     this.setFrog(frogThatJumped, action_row, action_col)
 
                     if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
@@ -131,6 +128,9 @@ class Board {
                         this.clearTiles();
                         //clear coloring
                         //change player
+                        console.log(this.currentPlayer, this.playerArray);
+
+                        this.alternatePlayer();
 
                         $('#player'+(this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].calculateScore());
                         this.alternatePlayer();
@@ -239,7 +239,6 @@ class Board {
         for(var i = 0; i < this.possibleActions.length; i++) {
             var coordinates = this.possibleActions[i]['target'];
             var selector = $('div.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + '] div.leaf');
-            // console.log(selector);
             selector.addClass('choice');
         }
     }
