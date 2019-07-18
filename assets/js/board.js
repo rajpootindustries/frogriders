@@ -73,7 +73,7 @@ class Board {
     alternatePlayer() {
         //gets the next player and sets it as current player
         //returns nothing
-        if(this.currentPlayer < this.playerArray.length - 1) {
+        if(this.currentPlayer < this.playerArray.length-1) {
             this.currentPlayer++;
             console.log(this.currentPlayer);
         }
@@ -108,33 +108,35 @@ class Board {
                 // console.log(action_row, row, action_col, col);
                 if(action_row === row && action_col === col) {
                     console.log('clicked right one');
-                    
+
+                    // console.log(this.possibleActions);
                     var target_row = this.possibleActions[i]['middle'][0];
                     var target_col = this.possibleActions[i]['middle'][1];
+                    // console.log(this.possibleActions);
                     //give frog to player, or the points of the frog
                     var removedFrog = this.popFrog(this.board[target_row][target_col]);
                     this.possibleActions = [];
+                    this.playerArray[this.currentPlayer].setFrogBag( removedFrog.getColor() );
+                    console.log(removedFrog.getColor());
 
                     //move frog
                     var frogThatJumped = this.popFrog(this.firstSelectedFrog);
+                    // console.log('ftj', frogThatJumped);
                     this.setFrog(frogThatJumped, action_row, action_col)
 
                     if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
                         this.clearTiles();
                         this.colorTiles();
-
-                        $('.player' + (this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].getScore());
+                        console.log('test', this.playerArray[this.currentPlayer].calculateScore())
+                        $('#player' + (this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].calculateScore());
                         console.log(this.currentPlayer, this.playerArray);
                     }
                     else {
                         this.clearTiles();
                         //clear coloring
                         //change player
-                        console.log(this.currentPlayer, this.playerArray);
 
-                        this.alternatePlayer();
-
-                        $('.player'+(this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].getScore());
+                        $('#player'+(this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].calculateScore());
                         this.alternatePlayer();
 
                     }
@@ -144,7 +146,10 @@ class Board {
                 }
             }
         }
-
+        console.log(this.winCondition());
+        if(this.winCondition()){
+            //endgame, modal
+        }
     }
 
     findValidMoves(frog) {
@@ -218,7 +223,6 @@ class Board {
 
     popFrog(frog) {
         var index = frog.getPosition();
-
         var frogRemoved = this.board[index.row][index.col];
         this.board[index.row][index.col] = null;
         var x = $('[data-row=' + index.row + '][data-col=' + index.col + '] div.frog')
@@ -239,6 +243,7 @@ class Board {
         for(var i = 0; i < this.possibleActions.length; i++) {
             var coordinates = this.possibleActions[i]['target'];
             var selector = $('div.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + '] div.leaf');
+            // console.log(selector);
             selector.addClass('choice');
         }
     }
@@ -249,5 +254,52 @@ class Board {
 
     clone(src) {
         return Object.assign({}, src);
+    }
+
+    isValidEndMove(frog){
+
+            var currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
+
+            var up = this.checkInDirection(currentPosition.row, currentPosition.col, "up"); // {row: 1, col:2}
+            var down = this.checkInDirection(currentPosition.row, currentPosition.col, "down"); // {row:1, col:0}
+            var left = this.checkInDirection(currentPosition.row, currentPosition.col, "left"); // {row:-1, col:0}
+            var right = this.checkInDirection(currentPosition.row, currentPosition.col, "right");
+
+            var directions = [this.clone(up), this.clone(down), this.clone(left), this.clone(right)];
+            var nextDirection = [this.clone(up), this.clone(down), this.clone(left), this.clone(right)];
+            var stringDir = ["up", "down", "left", "right"];
+            for (var i = 0; i < directions.length; i++) {
+                if (this.isInbound(directions[i].row, directions[i].col) && this.isFrog(this.board[directions[i].row][directions[i].col])) {
+                    nextDirection[i] = this.checkInDirection(directions[i].row, directions[i].col, stringDir[i]);
+                    if (this.isInbound(nextDirection[i].row, nextDirection[i].col) && this.board[nextDirection[i].row][nextDirection[i].col] === null) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+    }
+
+    winCondition(){
+        var allFalse = true;
+        var maxScoreReached = false;
+        if (this.playerArray[0].calculateScore() > 40 || this.playerArray[1].calculateScore() > 40){
+            maxScoreReached = true;
+        }
+        for (var row = 0; row < this.rows; row++){
+            for(var col = 0; col < this.columns; col++){
+                var frog = this.board[row][col];
+               if (this.isFrog(frog)){
+               if( this.isValidEndMove(frog)){
+                   allFalse = false;
+               }
+               }
+            }
+        }
+        if (maxScoreReached || allFalse){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 }
