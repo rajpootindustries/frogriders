@@ -8,7 +8,7 @@ class Player {
         this.score = score;
     }
     getScore(){
-        return this.score;
+        return ++this.score;
     }
     calculateScore(){ // simplified rules
         return Object.values(this.frogBag).reduce((accumulator, currentValue) => accumulator + currentValue);
