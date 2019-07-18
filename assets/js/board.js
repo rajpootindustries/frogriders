@@ -69,7 +69,7 @@ class Board {
     alternatePlayer() {
         //gets the next player and sets it as current player
         //returns nothing
-        if(this.currentPlayer < this.playerArray.length) {
+        if(this.currentPlayer < this.playerArray.length - 1) {
             this.currentPlayer++;
         }
         else {
@@ -99,14 +99,12 @@ class Board {
             for (var i = 0; i < this.possibleActions.length; i++) {
                 var action_row = this.possibleActions[i]['target'][0];
                 var action_col = this.possibleActions[i]['target'][1];
-                console.log(action_row, row, action_col, col);
+                // console.log(action_row, row, action_col, col);
                 if(action_row === row && action_col === col) {
                     console.log('clicked right one');
                     
-                    console.log(this.possibleActions);
                     var target_row = this.possibleActions[i]['middle'][0];
                     var target_col = this.possibleActions[i]['middle'][1];
-                    console.log(this.possibleActions);
                     //give frog to player, or the points of the frog
                     this.popFrog(this.board[target_row][target_col]);
                     this.possibleActions = [];
@@ -114,7 +112,6 @@ class Board {
 
                     //move frog
                     var frogThatJumped = this.popFrog(this.firstSelectedFrog);
-                    console.log('ftj', frogThatJumped);
                     this.setFrog(frogThatJumped, action_row, action_col)
 
                     if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
@@ -125,6 +122,9 @@ class Board {
                         this.clearTiles();
                         //clear coloring
                         //change player
+                        console.log(this.currentPlayer, this.playerArray);
+
+                        this.alternatePlayer();
 
                     }
                 }
@@ -216,7 +216,7 @@ class Board {
     }
 
     setFrog(frog, row, col) {
-        console.log('setfrog', frog, row, col)
+        // console.log('setfrog', frog, row, col)
         var element = frog.getFrog();
         var selector = $('div.tile[data-row=' + row + '][data-col=' + col + ']');
         frog.setPosition(row, col);
@@ -228,7 +228,7 @@ class Board {
         for(var i = 0; i < this.possibleActions.length; i++) {
             var coordinates = this.possibleActions[i]['target'];
             var selector = $('div.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + '] div.leaf');
-            console.log(selector);  
+            // console.log(selector);  
             selector.addClass('choice');
         }
     }   
