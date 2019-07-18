@@ -19,7 +19,7 @@ header{
 }
 
 .stats{
-  width: 100%;
+  width: 70%;
   height: 40px;
   background-color: chartreuse;
   position: relative;
@@ -27,7 +27,28 @@ header{
   bottom: 1px; */
   margin: 10px auto;
   display: block;
+  margin: 4px auto;
 
+}
+
+.player1{
+  height:34px;
+  width: 60px;
+  float:left;
+  background-color: coral;
+  margin: 4px;
+}
+.player2{
+  height: 34px;
+  width: 60px;
+  float: right;
+  background-color: coral;
+  margin: 4px;
+}
+
+#player1, #player2{
+  text-align: center;
+  margin:10px;
 }
 
 .tile{
