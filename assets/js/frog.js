@@ -16,7 +16,7 @@ class Frog {
         
     }
     getPosition(){
-        return {x: this.x, y: this.y};
+        return {row: this.row, col: this.col};
     }
     handleClick(){
         console.log(this)

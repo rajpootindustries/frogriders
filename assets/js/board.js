@@ -6,6 +6,7 @@ class Board {
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = null;
+        this.possibleActions = [];
     }
 
     intializeBoard() {
@@ -35,7 +36,9 @@ class Board {
                     tile.append(leaf);
                     tile.append(frog);
                     
-                    this.board[row][col] = new Frog(colors[colorIndex], tile).setPosition(row, col);
+                    var newFrog = new Frog(colors[colorIndex], tile)
+                    newFrog.setPosition(row, col);
+                    this.board[row][col] = newFrog;
                     
                 }
                 $('.gameBoard').append(tile);
@@ -80,22 +83,66 @@ class Board {
 
     findValidMoves(frog) {
         let currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
-        for(let dir of this.checkInDirection()){
-            var relativeUp = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // {x: 1, y:2}
-            var relativeDown = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // {x:1, y:0}
-            var relativeLeft = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // 
-            var relativeRight = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
+        
+        
+            
+        var up = this.checkInDirection(currentPosition.row, currentPosition.col, "up"); // {row: 1, col:2}
+        var down = this.checkInDirection(currentPosition.row, currentPosition.col, "down"); // {row:1, col:0}
+        var left = this.checkInDirection(currentPosition.row, currentPosition.col, "left"); // {row:-1, col:0}
+        var right = this.checkInDirection(currentPosition.row, currentPosition.col, "right");
+
+        var directions = [up, down, left, right];
+        var stringDir = ["up", "down", "left", "right"];
+        for(var i = 0; i < directions.length; i++) {
+            if(this.isInbound(directions[i].row, directions[i].col) && this.isFrog(this.board[directions[i].row][directions[i].col])) {  
+                directions[i] = this.checkInDirection(directions[i].row, directions[i].col, stringDir[i]);
+                if(this.isInbound(directions[i].row, directions[i].col) && this.board[directions[i].row][directions[i].col] === null) {
+                    this.possibleActions.push([directions[i].row, directions[i].col]);
+                }
+            }
         }
+        
+        console.log(this.possibleActions);
+
         // if relative direction.x < 0 || relativeDirection.x > 9 || relativeDirection.y < 0 || relativeDirection.y > 9 { relativeDirection = false;} 
         // if relativeDirection is undefined (empty tile) => false
         // if relativeDirection of frog at relativePosition is another frog => false
     }
-    checkInDirection() {
+    checkInDirection(row, col, direction) {
         //used by find valid moves for the current player
-            const up = {x: 0, y: 1};
-            const down = {x: 0, y: -1};
-            const left = {x: -1, y: 0};
-            const right = {x: 1, y:0};
-        return [up, down, left, right];
+        const up = {row: 0, col: 1};
+        const down = {row: 0, col: -1};
+        const left = {row: -1, col: 0};
+        const right = {row: 1, col:0};
+
+        if(direction === 'up') {
+            return {row: row + up.row, col: col + up.col};
+        }
+        else if(direction === 'down') {
+            return {row: row + down.row, col: col + down.col};
+        }
+        else if(direction === 'left') {
+            return {row: row + left.row, col: col + left.col};
+        }
+        else if(direction === 'right'){
+            return {row: row + right.row, col: col + right.col};
+        }
+        
     }
+
+
+    
+    isInbound(row, col) {
+        return (row < this.rows && row >= 0  && col >= 0 && col < this.columns) 
+    }
+
+    isFrog(frog) {
+        if(frog && frog.constructor === Frog){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
 }
