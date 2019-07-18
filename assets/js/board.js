@@ -35,7 +35,7 @@ class Board {
                     tile.append(leaf);
                     tile.append(frog);
                     
-                    this.board[row][col] = new Frog(colors[colorIndex], tile);
+                    this.board[row][col] = new Frog(colors[colorIndex], tile).setPosition(row, col);
                     
                 }
                 $('.gameBoard').append(tile);
@@ -79,6 +79,7 @@ class Board {
     }
 
     findValidMoves(frog) {
+        console.log(frog);
         let currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
         for(let dir of this.checkInDirection()){
             var relativeUp = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // {x: 1, y:2}
@@ -97,5 +98,8 @@ class Board {
             const left = {x: -1, y: 0};
             const right = {x: 1, y:0};
         return [up, down, left, right];
+    }
+    isOutOfBounds(direction){
+        return (direction.x < 0 || direction.y < 0 || direction.x > 9 || direction.y > 9); //returns true if directions is out of Bounds
     }
 }
