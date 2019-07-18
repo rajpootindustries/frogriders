@@ -1,9 +1,8 @@
 class Frog {
     constructor(color, domElement) {
         this.color = color;
-        this.position = null;
-        this.x = null;
-        this.y = null;
+        this.row = null;
+        this.col = null;
         this.domElement = $(domElement);
         this.handleClick = this.handleClick.bind(this);
         // $('.tile').on('click', '.frog', this.handleClick );
@@ -11,9 +10,9 @@ class Frog {
     getColor(){
         return this.color;
     }
-    setPosition(){
-        this.x = x;
-        this.y = y;
+    setPosition(row, col){
+        this.row = row;
+        this.col = col;
         
     }
     getPosition(){
