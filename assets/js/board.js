@@ -5,7 +5,7 @@ class Board {
         this.columns = 9;
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
-        this.currentPlayer = null;
+        this.currentPlayer = 0;
         this.possibleActions = [];
         this.firstSelectedFrog = null;
 
@@ -37,24 +37,24 @@ class Board {
 
                     tile.append(leaf);
                     tile.append(frog);
-                    
+
                     var newFrog = new Frog(colors[colorIndex], tile)
                     newFrog.setPosition(row, col);
                     this.board[row][col] = newFrog;
-                    
+
                 }
                 $('.gameBoard').append(tile);
 
             }
 
         }
-        
-        this.handleCellClick = this.handleCellClick.bind(this);        
+
+        this.handleCellClick = this.handleCellClick.bind(this);
         $('.tile').on('click', '.leaf', this.handleCellClick);
         $('.tile').on('click', '.frog', this.handleCellClick);
-        
+
         //initialize players
-        this.currentPlayer = 0;
+        // this.currentPlayer = 0;
     }
 
 
@@ -71,9 +71,11 @@ class Board {
         //returns nothing
         if(this.currentPlayer < this.playerArray.length - 1) {
             this.currentPlayer++;
+            console.log(this.currentPlayer);
         }
         else {
             this.currentPlayer = 0;
+            console.log('else statement alternatePlayer', this.currentPlayer);
         }
 
     }
@@ -82,7 +84,7 @@ class Board {
         var tile = event.currentTarget
         var col = parseInt($(tile).attr('data-col'));
         var row = parseInt($(tile).attr('data-row'));
-        
+
         if(this.possibleActions.length === 0) {
             var clickedFrog = this.board[row][col];
             this.firstSelectedFrog = clickedFrog;
@@ -106,9 +108,8 @@ class Board {
                     var target_row = this.possibleActions[i]['middle'][0];
                     var target_col = this.possibleActions[i]['middle'][1];
                     //give frog to player, or the points of the frog
-                    this.popFrog(this.board[target_row][target_col]);
+                    var removedFrog = this.popFrog(this.board[target_row][target_col]);
                     this.possibleActions = [];
-
 
                     //move frog
                     var frogThatJumped = this.popFrog(this.firstSelectedFrog);
@@ -117,6 +118,9 @@ class Board {
                     if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
                         this.clearTiles();
                         this.colorTiles();
+
+                        $('.player' + (this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].getScore());
+                        console.log(this.currentPlayer, this.playerArray);
                     }
                     else {
                         this.clearTiles();
@@ -126,6 +130,9 @@ class Board {
 
                         this.alternatePlayer();
 
+                        $('.player'+(this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].getScore());
+                        this.alternatePlayer();
+
                     }
                 }
                 else {
@@ -133,13 +140,13 @@ class Board {
                 }
             }
         }
-        
+
     }
 
     findValidMoves(frog) {
         this.possibleActions = [];
         var currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
-        
+
         var up = this.checkInDirection(currentPosition.row, currentPosition.col, "up"); // {row: 1, col:2}
         var down = this.checkInDirection(currentPosition.row, currentPosition.col, "down"); // {row:1, col:0}
         var left = this.checkInDirection(currentPosition.row, currentPosition.col, "left"); // {row:-1, col:0}
@@ -148,15 +155,15 @@ class Board {
         var directions = [this.clone(up), this.clone(down), this.clone(left), this.clone(right)];
         var nextDirection = [this.clone(up), this.clone(down), this.clone(left), this.clone(right)];
         var stringDir = ["up", "down", "left", "right"];
-        for(var i = 0; i < directions.length; i++) {    
-            if(this.isInbound(directions[i].row, directions[i].col) && this.isFrog(this.board[directions[i].row][directions[i].col])) {  
+        for(var i = 0; i < directions.length; i++) {
+            if(this.isInbound(directions[i].row, directions[i].col) && this.isFrog(this.board[directions[i].row][directions[i].col])) {
                 nextDirection[i] = this.checkInDirection(directions[i].row, directions[i].col, stringDir[i]);
                 if(this.isInbound(nextDirection[i].row, nextDirection[i].col) && this.board[nextDirection[i].row][nextDirection[i].col] === null) {
                     this.possibleActions.push({"target": [nextDirection[i].row, nextDirection[i].col], "middle": [directions[i].row, directions[i].col]});
                 }
             }
         }
-        
+
         if(this.possibleActions.length === 0) {
             return false;
         }
@@ -164,7 +171,7 @@ class Board {
             return true;
         }
 
-        // if relative direction.x < 0 || relativeDirection.x > 9 || relativeDirection.y < 0 || relativeDirection.y > 9 { relativeDirection = false;} 
+        // if relative direction.x < 0 || relativeDirection.x > 9 || relativeDirection.y < 0 || relativeDirection.y > 9 { relativeDirection = false;}
         // if relativeDirection is undefined (empty tile) => false
         // if relativeDirection of frog at relativePosition is another frog => false
     }
@@ -187,13 +194,13 @@ class Board {
         else if(direction === 'right'){
             return {row: row + right.row, col: col + right.col};
         }
-        
+
     }
 
 
-    
+
     isInbound(row, col) {
-        return (row < this.rows && row >= 0  && col >= 0 && col < this.columns) 
+        return (row < this.rows && row >= 0  && col >= 0 && col < this.columns)
     }
 
     isFrog(frog) {
@@ -204,10 +211,10 @@ class Board {
             return false;
         }
     }
-    
+
     popFrog(frog) {
         var index = frog.getPosition();
-        
+
         var frogRemoved = this.board[index.row][index.col];
         this.board[index.row][index.col] = null;
         var x = $('[data-row=' + index.row + '][data-col=' + index.col + '] div.frog')
@@ -228,10 +235,9 @@ class Board {
         for(var i = 0; i < this.possibleActions.length; i++) {
             var coordinates = this.possibleActions[i]['target'];
             var selector = $('div.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + '] div.leaf');
-            // console.log(selector);  
             selector.addClass('choice');
         }
-    }   
+    }
 
     clearTiles() {
         $('div.leaf').removeClass('choice');
