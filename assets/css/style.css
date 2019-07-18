@@ -103,3 +103,17 @@ header{
 .brown {
     background-image: url(../images/brown.png);
 }
+
+.center {
+    background-color: goldenrod;
+}
+
+.choice {
+    background-color: greenyellow;
+    
+}
+
+.center.choice {
+    background-color: rgb(245, 196, 105);
+}
+

@@ -28,7 +28,7 @@ class Board {
                 var tile = $('<div>').addClass('tile').attr(indexes);
                 var leaf = $('<div>').addClass('leaf');
                 if(row === 4 && col === 4){
-                    leaf.css('background-color', 'orange');
+                    leaf.addClass('center');
                     tile.append(leaf);
                     this.board[row][col] = null;
                 } else{
@@ -89,6 +89,8 @@ class Board {
             if (this.board[row][col]) {
                 //check valid moves
                 this.findValidMoves(clickedFrog);
+                //color valid tiles
+                this.colorTiles();
             }
         }
         else {
@@ -116,9 +118,12 @@ class Board {
                     this.setFrog(frogThatJumped, action_row, action_col)
 
                     if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
-
+                        this.clearTiles();
+                        this.colorTiles();
                     }
                     else {
+                        this.clearTiles();
+                        //clear coloring
                         //change player
 
                     }
@@ -213,11 +218,23 @@ class Board {
     setFrog(frog, row, col) {
         console.log('setfrog', frog, row, col)
         var element = frog.getFrog();
-        var x = $('div.tile[data-row=' + row + '][data-col=' + col + ']');
+        var selector = $('div.tile[data-row=' + row + '][data-col=' + col + ']');
         frog.setPosition(row, col);
         this.board[row][col] = frog;
-        console.log(x)
-        x.append(element);
+        selector.append(element);
+    }
+
+    colorTiles() {
+        for(var i = 0; i < this.possibleActions.length; i++) {
+            var coordinates = this.possibleActions[i]['target'];
+            var selector = $('div.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + '] div.leaf');
+            console.log(selector);  
+            selector.addClass('choice');
+        }
+    }   
+
+    clearTiles() {
+        $('div.leaf').removeClass('choice');
     }
 
     clone(src) {
