@@ -35,7 +35,7 @@ class Board {
                     tile.append(leaf);
                     tile.append(frog);
                     
-                    this.board[row][col] = new Frog(colors[colorIndex], tile);
+                    this.board[row][col] = new Frog(colors[colorIndex], tile).setPosition(row, col);
                     
                 }
                 $('.gameBoard').append(tile);
@@ -83,14 +83,26 @@ class Board {
     }
 
     findValidMoves(frog) {
-        console.log(frog);
         //returns array of valid objects
             //checks in all directions using checkInDirection to find valid moves;
+            
 
     }
 
-    checkInDirection() {
+    checkInDirection(direction) {
         //used by find valid moves for the current player
+            if (direction === 'up') {
+
+            }
+            else if (direction === 'left') {
+
+            }
+            else if (direction === 'right') {
+
+            }
+            else if (direction === 'down') {
+
+            }
             //up
             //down
             //left
