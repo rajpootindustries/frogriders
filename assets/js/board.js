@@ -49,6 +49,10 @@ class Board {
 
         }
 
+        //create win/lose (reset) modal
+        var endModal = $('<div>').addClass('endModal');
+        
+
         this.handleCellClick = this.handleCellClick.bind(this);
         $('.tile').on('click', '.leaf', this.handleCellClick);
         $('.tile').on('click', '.frog', this.handleCellClick);
