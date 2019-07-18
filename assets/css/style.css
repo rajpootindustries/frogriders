@@ -55,7 +55,7 @@ header{
 
 #player1, #player2{
   text-align: center;
-  margin:10px;
+  margin:7px;
 }
 
 .tile{
@@ -110,10 +110,9 @@ header{
 
 .choice {
     background-color: greenyellow;
-    
+
 }
 
 .center.choice {
     background-color: rgb(245, 196, 105);
 }
-
