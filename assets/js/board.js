@@ -6,7 +6,6 @@ class Board {
         this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = null;
-        this.frog = null;
 
     }
 
@@ -85,23 +84,23 @@ class Board {
     }
 
     findValidMoves(frog) {
-        let currentPosition = frog.getPosition(); // {x: this.x, y: this.y};
+        let currentPosition = frog.getPosition(); // {x: this.x, y: this.y}; {x: 1, y: 1}
         for(let dir of this.checkInDirection()){
-            var relativeUp = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
-            var relativeDown = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
-            var relativeLeft = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
+            var relativeUp = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // {x: 1, y:2}
+            var relativeDown = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // {x:1, y:0}
+            var relativeLeft = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y}; // 
             var relativeRight = {x: currentPosition.x + dir.x, y: currentPosition.y + dir.y};
         }
+        // if relative direction.x < 0 || relativeDirection.x > 9 || relativeDirection.y < 0 || relativeDirection.y > 9 { relativeDirection = false;} 
+        // if relativeDirection is undefined (empty tile) => false
+        // if relativeDirection of frog at relativePosition is another frog => false
     }
-
-
-
     checkInDirection() {
         //used by find valid moves for the current player
-            const up = {x: 0, y: 1}
-            const down = {x: 0, y: -1}
-            const left = {x: -1, y: 0}
-            const right = {x: 1, y:0}
+            const up = {x: 0, y: 1};
+            const down = {x: 0, y: -1};
+            const left = {x: -1, y: 0};
+            const right = {x: 1, y:0};
         return [up, down, left, right];
     }
 }
