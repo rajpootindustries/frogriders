@@ -1,58 +1,51 @@
 class Village {
     constructor() {
-        this.frogs = [];
-        this.availableCards = [];
-
+        this.frogs = {'red': [], 'yellow': [], 'blue': []};
+    }
+    update() {
+        $('#villageRed').text(this.frogs['red'].length);
+        $('#villageYellow').text(this.frogs['yellow'].length);
+        $('#villageBlue').text(this.frogs['blue'].length);
+    }
+    getFrog(color) {
+        if(this.frogs[color].length > 0) {
+            var frog = this.frogs[color].pop();
+            this.update();
+            return frog;
+            
+        }
+        else {
+            return null;
+        }
+        
     }
 
-    getFrogs() {
-        return this.frogs;
-    }
-
-    setFrog(player, frog) {
+    addFrog(frog) {
         //if red, roll again
-        if(frog.color === "red") {
-            this.redFrogAction();
+        var frogColor = frog.color;
+        if(frogColor === "red") {
+            this.frogs[frogColor].push(frog);
+            this.update();
         }
         //if blue get cards
-        else if(frog.color === "blue"){
-            this.blueFrogAction();
+        else if(frogColor === "blue") {
+            this.frogs[frogColor].push(frog);   
+            this.update();     
         }
         //if yellow trade frogs
-        else if(frog.color === "yellow"){
-            this.yellowFrogAction();
+        else if(frogColor === "yellow") {
+            this.frogs[frogColor].push(frog);  
+            this.update();      
         }
-        else if(frog.color === "brown") {
+        else if(frogColor === "brown") {
             //if brown, send error
-            this.brownFrogAction();
+            this.frogs[frogColor].push(frog);    
+            this.update();    
         }
         else {
             console.log("Village: not a frog");
             return null;
         }
-    }
-
-    redFrogAction() {
-        //roll again
-        return "go back a player";
-    }
-
-    blueFrogAction() {
-        //get cards
-        //have player choose card, click handler on card
         
-        this.chooseCard();
-    }
-
-    yellowFrogAction() {
-
-    }
-
-    brownFrogAction() {
-
-    }
-
-    chooseCard() {
-        return card;
     }
 }

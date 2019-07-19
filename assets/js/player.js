@@ -7,6 +7,7 @@ class Player {
         this.frogBag.brown = 0;
         this.frogBag.yellow = 0;
         this.frogBag.blue = 0;
+        this.bag = {"red": [], "blue": [], "yellow": [], "brown": []};
     }
     setScore(score){
         this.score += score;
@@ -37,6 +38,11 @@ class Player {
     }
     getFrogBag(){
         return this.frogBag;
+    }
+
+    keep(frog) {
+        var frogColor = frog.getColor();
+        this.bag[frogColor].push(frog);
     }
 
 }
