@@ -8,13 +8,14 @@ class Board {
         this.currentPlayer = 0;
         this.possibleActions = [];
         this.firstSelectedFrog = null;
-       
-       
-        this.modal = new Modal('#modalShadow', "#modalBody", "#modalMessage", "#modalButton" );
-
+        this.resetGame = this.resetGame.bind(this); // ?
+        this.modal = new Modal('#modalShadow', "#modalBody", "#modalMessage", "#modalButton");
+        
+        this.initializeApp = initializeApp;
+        
     }
 
-    intializeBoard() {
+    initializeBoard() {
         //clear old board
         $('.gameBoard').empty()
         this.modal.init();
@@ -50,13 +51,10 @@ class Board {
                 $('.gameBoard').append(tile);
 
             }
-
         }
-
         this.handleCellClick = this.handleCellClick.bind(this);
         $('.tile').on('click', '.leaf', this.handleCellClick);
         $('.tile').on('click', '.frog', this.handleCellClick);
-
         //initialize players
         // this.currentPlayer = 0;
     }
@@ -304,5 +302,22 @@ class Board {
             return false;
         }
 
+    }
+    resetGame(){
+        
+        // reset all game properties / variables
+        // call initialize board
+
+
+        // this.board = [];
+        // this.rows = 9;
+        // this.columns = 9;
+        // this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
+        // this.playerArray = [];
+        // this.currentPlayer = 0;
+        // this.possibleActions = [];
+        // this.firstSelectedFrog = null;
+        // this.modal = new Modal('#modalShadow', "#modalBody", "#modalMessage", "#modalButton" );
+        // this.initializeBoard();
     }
 }
