@@ -109,10 +109,24 @@ header{
 }
 
 .choice {
-    background-color: greenyellow;
+    /* background-color: greenyellow; */
+    animation: pulse 2s infinite;
 
 }
 
+@keyframes pulse {
+  0% {
+    background-color:rgb(14, 206, 55);
+  }
+  50% {
+    background-color: greenyellow;
+  }
+
+  100% {
+    background-color: rgb(14, 206, 55);
+
+  }
+}
 .center.choice {
     background-color: rgb(245, 196, 105);
 }
@@ -147,5 +161,5 @@ header{
   position: absolute;
   margin: 5px auto;
   bottom: 15px;
-  left: 7.5vmin;
+  left: 10vmin;
 }
