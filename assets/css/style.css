@@ -20,8 +20,10 @@ header{
   position: relative;
   border: 1px solid green;
   /* float: left; */
-  margin: 0 auto;
-  display: block;
+  margin: 0px auto;
+  margin
+  display: inline-block;
+  vertical-align: top;
   background-color: rgb(93, 93, 255);
 }
 
@@ -113,6 +115,33 @@ header{
 
 }
 
+.card-slot {
+    width :180px;
+    height: 100px;
+    margin: 10px;
+    background-color: cyan;
+    border: thick white solid;
+    display: inline-block;
+    margin-left: 50px;
+    border-radius:25px;
+
+}
 .center.choice {
     background-color: rgb(245, 196, 105);
+}
+
+.cards {
+    margin-top: 30px;
+    width: 20vw;
+    height: 60vh;
+    display: inline-block;
+    vertical-align: top;
+    /* background-color:orange; */
+}
+
+.boardContainer {
+    height: 810px;
+    width: 50vw;
+    display: inline-block;
+    /* background-color: red; */
 }

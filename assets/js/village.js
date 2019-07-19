@@ -1,13 +1,15 @@
 class Village {
     constructor() {
         this.frogs = [];
+        this.availableCards = [];
+
     }
 
     getFrogs() {
         return this.frogs;
     }
 
-    setFrog(frog) {
+    setFrog(player, frog) {
         //if red, roll again
         if(frog.color === "red") {
             this.redFrogAction();
@@ -29,7 +31,28 @@ class Village {
             return null;
         }
     }
+
     redFrogAction() {
+        //roll again
+        return "go back a player";
+    }
+
+    blueFrogAction() {
+        //get cards
+        //have player choose card, click handler on card
         
+        this.chooseCard();
+    }
+
+    yellowFrogAction() {
+
+    }
+
+    brownFrogAction() {
+
+    }
+
+    chooseCard() {
+        return card;
     }
 }

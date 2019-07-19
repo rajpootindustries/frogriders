@@ -3,11 +3,12 @@ class Board {
         this.board = [];
         this.rows = 9;
         this.columns = 9;
-        this.removedFrogs = {"red": null, "blue": null, "yellow": null, "brown": null};
         this.playerArray = [];
         this.currentPlayer = 0;
         this.possibleActions = [];
         this.firstSelectedFrog = null;
+        this.frogsGained = [];
+        this.village = new Village();
 
     }
 
@@ -51,7 +52,7 @@ class Board {
 
         //create win/lose (reset) modal
         var endModal = $('<div>').addClass('endModal');
-        
+
 
         this.handleCellClick = this.handleCellClick.bind(this);
         $('.tile').on('click', '.leaf', this.handleCellClick);
@@ -109,27 +110,23 @@ class Board {
                 if(action_row === row && action_col === col) {
                     console.log('clicked right one');
 
-                    // console.log(this.possibleActions);
                     var target_row = this.possibleActions[i]['middle'][0];
                     var target_col = this.possibleActions[i]['middle'][1];
-                    // console.log(this.possibleActions);
                     //give frog to player, or the points of the frog
                     var removedFrog = this.popFrog(this.board[target_row][target_col]);
+
+                    //clear ;'
                     this.possibleActions = [];
                     this.playerArray[this.currentPlayer].setFrogBag( removedFrog.getColor() );
-                    console.log(removedFrog.getColor());
 
                     //move frog
                     var frogThatJumped = this.popFrog(this.firstSelectedFrog);
-                    // console.log('ftj', frogThatJumped);
                     this.setFrog(frogThatJumped, action_row, action_col)
 
                     if(this.board[action_row][action_col] && this.findValidMoves(this.board[action_row][action_col]) ) {
                         this.clearTiles();
                         this.colorTiles();
-                        console.log('test', this.playerArray[this.currentPlayer].calculateScore())
                         $('#player' + (this.currentPlayer+1)).text(this.playerArray[this.currentPlayer].calculateScore());
-                        console.log(this.currentPlayer, this.playerArray);
                     }
                     else {
                         this.clearTiles();
@@ -146,7 +143,6 @@ class Board {
                 }
             }
         }
-        console.log(this.winCondition());
         if(this.winCondition()){
             //endgame, modal
         }
@@ -231,7 +227,6 @@ class Board {
     }
 
     setFrog(frog, row, col) {
-        // console.log('setfrog', frog, row, col)
         var element = frog.getFrog();
         var selector = $('div.tile[data-row=' + row + '][data-col=' + col + ']');
         frog.setPosition(row, col);
@@ -243,7 +238,6 @@ class Board {
         for(var i = 0; i < this.possibleActions.length; i++) {
             var coordinates = this.possibleActions[i]['target'];
             var selector = $('div.tile[data-row=' + coordinates[0] + '][data-col=' + coordinates[1] + '] div.leaf');
-            // console.log(selector);
             selector.addClass('choice');
         }
     }
