@@ -1,14 +1,13 @@
-class Modal{
+class Modal {
     constructor(modalShadow, modalBody, modalMessage, modalButton){
         this.modalShadow = $(modalShadow);
         this.modalBody = $(modalBody);
         this.modalMessage = $(modalMessage);
         this.modalButton = $(modalButton);
-        
-        this.onClose = null;
-        
+        // this.onClose = null;
         this.hide = this.hide.bind(this);
         this.show = this.show.bind(this);
+        
     }
     show(){
         this.modalShadow.show();
@@ -27,16 +26,11 @@ class Modal{
     }
     init(){
         this.hide();
-        // this.modalShadow.off('click');
-        // this.modalShadow.on('click', this.onClose);
-        // this.modalShadow.on('click', this.hide);
         this.modalButton.off('click');
-        this.modalButton.on('click', this.onClose);
+        this.modalButton.on('click', initializeApp);
         this.modalButton.on('click', this.hide);
     }
 
-    onClose() {
-        
-    }
+    
     
 }
