@@ -145,14 +145,19 @@ header{
   position: fixed;
   left: 50%;
   top: 50%;
-  min-height: 30vmin;
-  min-width: 30vmin;
+  height: 280px;
+  width: 400px;
   transform: translate(-50%, -50%);
   background-color: lightgreen;
   border-radius:10%;
+  background-image: url(../images/hypnoToad.gif);
+  background-position: cover;
+  background-repeat: no-repeat;
   /* display: flex; */
 }
 #modalMessage{
+  font-size: 200%;
+  color: white;
   position: relative;
   text-align: center;
   top: 50px;
@@ -160,6 +165,6 @@ header{
 #modalButton{
   position: absolute;
   margin: 5px auto;
-  bottom: 15px;
-  left: 10vmin;
+  bottom: 5px;
+  left: 16vmin;
 }
