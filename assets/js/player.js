@@ -15,8 +15,6 @@ class Player {
         return this.score;
     }
     calculateScore(){ // simplified rules
-        // ☺return Object.values(this.frogBag).reduce((accumulator, currentValue) => accumulator + currentValue);
-        return 50;
         return parseInt(this.frogBag.red) + parseInt(this.frogBag.brown) + parseInt(this.frogBag.yellow) + parseInt(this.frogBag.blue);
 
     }
